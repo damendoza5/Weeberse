@@ -12,3 +12,14 @@ export const fetchTop = async () => {
         console.log(error);
     }
 };
+
+export const fetchSeasonNow = async () => {
+    try {
+        const endpoint = `${apiUrl}seasons/now`;
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}

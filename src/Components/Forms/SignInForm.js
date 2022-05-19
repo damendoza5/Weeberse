@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, View} from "react-native";
 import { Button, TextInput, Text } from "react-native-paper";
 import theme from "../../Theme";
+import Toast from "react-native-toast-message";
 import { AntDesign } from "@expo/vector-icons";
 import { Context as AuthContext } from "../../Providers/AuthContext";
 
@@ -12,6 +13,14 @@ function SignInForm() {
 	const [emailError, setEmailError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
 	const [error, setError] = useState(false);
+	
+	const showToast = ({errores}) => {
+		Toast.show({
+		  type: 'error',
+		  text1: 'Error trying to Sign In...',
+		  text2: {errores}
+		});
+	}
 
 	function handleVerify(input) {
 		if (input === "email") {
@@ -31,8 +40,8 @@ function SignInForm() {
 
 	return (
 		<View>
-			{error && <Text>{error}</Text>}
-			{state.errorMessage !== null && <Text>{state.errorMessage}</Text>}
+			{error}
+			{state.errorMessage}
 			
 			<TextInput
 				mode="flat"
@@ -79,10 +88,7 @@ function SignInForm() {
 const styles = StyleSheet.create({
 	button: {
 		alignSelf: "flex-end",
-		position: "relative",
-		marginTop: "15%",
-		marginBottom: 20,
-		marginRight: 25,
+		marginTop: "65%",
 		width: 80,
 		padding: 15,
 		borderRadius: 20,
@@ -91,9 +97,8 @@ const styles = StyleSheet.create({
 	textInput: {
 		backgroundColor: theme.colors.primary,
 		color: theme.colors.white,
-		height: 45,
-		marginVertical: "3%",
-        marginHorizontal: "6%"
+		height: 55,
+		marginVertical: "4%",
 	},
 });
 

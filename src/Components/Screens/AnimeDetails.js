@@ -57,7 +57,7 @@ const AnimeDetails = ({ route, navigation }) => {
                     </Card.Content>
                 </Card>
             </View>
-            <View style={styles.cardContainer}>
+            <View style={styles.cardSynopsis}>
                 <Card style={styles.card}>
                     <Card.Content>
                         <Title>Synopsis</Title>
@@ -125,6 +125,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: "5%"
+    },
+    cardSynopsis: {
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: "5%",
+        marginBottom: "25%"
     },
     card: {
         backgroundColor: theme.colors.primary,

@@ -1,10 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { Button, TextInput, Text } from "react-native-paper";
 import theme from "../../Theme";
-import { AntDesign } from "@expo/vector-icons";
+import Toast from 'react-native-toast-message';
 import { Context as AuthContext } from "../../Providers/AuthContext";
 import { validate } from "email-validator";
+
+const deviceWidth = Dimensions.get("screen").width;
+const deviceHeight = Dimensions.get("screen").height;
 
 function SignupForm() {
 	const { state, signup } = useContext(AuthContext);
@@ -17,6 +20,14 @@ function SignupForm() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 	const [error, setError] = useState(false);
+
+	const showToast = ({errores}) => {
+		Toast.show({
+		  type: 'error',
+		  text1: 'Error trying to Sign Up...',
+		  text2: {errores}
+		});
+	}
 
 	function handleVerify(input) {
 		if (input === "Username") {
@@ -56,7 +67,7 @@ function SignupForm() {
 
 	return (
 		<View>
-			{error && <Text>{error}</Text>}
+			{error && showToast(error) && console.log(error)}
 			{state.errorMessage !== null && <Text>{state.errorMessage}</Text>}
 			<TextInput
 				mode="flat"
@@ -117,11 +128,7 @@ function SignupForm() {
 				style={styles.button}
 				onPress={() => handleVerify("signup")}
 			>
-				<AntDesign
-					name="right"
-					size={24}
-					color={theme.colors.white}
-				/>
+				<Text style={styles.text}>Sign Up</Text>
 			</Button>
 		</View>
 	);
@@ -129,22 +136,23 @@ function SignupForm() {
 
 const styles = StyleSheet.create({
 	button: {
-		alignSelf: "flex-end",
-		position: "relative",
-		marginTop: "3%",
-		marginBottom: 20,
-		marginRight: 25,
-		width: 80,
+		alignSelf: "center",
+		marginTop: "15%",
+		width: deviceWidth * 0.6,
 		padding: 15,
 		borderRadius: 20,
 		backgroundColor: theme.colors.acento,
 	},
+	text: {
+		color: theme.colors.white,
+		fontSize: 16,
+		fontWeight: 'bold'
+	},
 	textInput: {
 		backgroundColor: theme.colors.primary,
 		color: theme.colors.white,
-		height: 45,
-		marginVertical: "1%",
-        marginHorizontal: "6%"
+		height: 55,
+		marginVertical: "4%",
 	},
 });
 

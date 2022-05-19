@@ -3,23 +3,31 @@ import { ScrollView, View, Text, StyleSheet, Dimensions } from 'react-native';
 import theme from '../../Theme';
 import Logo from '../Shared/Logo';
 import { Entypo } from '@expo/vector-icons'; 
-import { fetchTop } from '../../Api';
+import { fetchTop, fetchSeasonNow } from '../../Api';
 import { ActivityIndicator, Title } from 'react-native-paper';
 import TopList from '../Lists/TopList';
+import SeasonList from '../Lists/SeasonList';
 
 const deviceWidth = Dimensions.get("screen").width;
 const deviceHeight = Dimensions.get("screen").height;
 
 const Home = ({navigation}) => {
     const [top, setTop] = useState({});
+    const [season, setSeason] = useState({});
 
     const getTop = async () => {
         const response = await fetchTop();
         setTop(response);
     }
 
+    const getSeason = async () => {
+        const responseSeason = await fetchSeasonNow();
+        setSeason(responseSeason);
+    }
+
     useEffect(() => {
         getTop();
+        getSeason();
     }, []);
 
     return (
@@ -35,13 +43,21 @@ const Home = ({navigation}) => {
                 <Logo style={styles.logo}/>
             </View>
             <View>
-                <Title style={styles.top}>Top Animes</Title>
+                <Title style={styles.titles}>Top Animes</Title>
                 {top.data ? (
                     <TopList top={top} navigation={navigation}/>
                 ) : (
                     <ActivityIndicator animating={true} color={theme.colors.acento}/>
                 )
                 }
+            </View>
+            <View>
+                <Title style={styles.titles}>Current Season</Title>
+                {season.data ? (
+                    <SeasonList season={season} navigation={navigation}/>
+                ) : (
+                    <ActivityIndicator animating={true} color={theme.colors.acento}/>
+                )}
             </View>
         </ScrollView>
     );
@@ -63,7 +79,7 @@ const styles = StyleSheet.create({
         marginTop: deviceHeight * 0.07,
         marginLeft: deviceWidth * 0.05,
     },
-    top: {
+    titles: {
         marginLeft: deviceWidth * 0.07,
     }
 })

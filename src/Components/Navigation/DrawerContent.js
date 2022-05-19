@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import theme from "../../Theme";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Title, Caption, Drawer, Avatar, Text } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Context as AuthProvider } from "../../Providers/AuthContext";
@@ -45,11 +45,13 @@ const DrawerContent = ({ props, navigation, uid }) => {
           <View style={styles.drawerContent}>
             <View style={styles.userInfoSection}>
               <View style={{ flexDirection: "row", marginTop: 15 }}>
-                <Avatar.Image
-                  source={require("../../../assets/icon.png")}
-                  size={50}
-                  style={{ backgroundColor: theme.colors.background }}
-                ></Avatar.Image>
+                <TouchableOpacity onPress={() => navigation.navigate("SettingsStackScreen")}>
+                  <Avatar.Image
+                    source={require("../../../assets/icon.png")}
+                    size={50}
+                    style={{ backgroundColor: theme.colors.background }}
+                  ></Avatar.Image>
+                </TouchableOpacity>
                 <View style={{ marginLeft: 15, flexDirection: "column" }}>
                   <Caption style={styles.caption}>Welcome,</Caption>
                   <Title style={styles.title}>{user.username}</Title>
@@ -68,7 +70,7 @@ const DrawerContent = ({ props, navigation, uid }) => {
                     <Text style={{ color: theme.colors.white }}>Home</Text>
                   )}
                   onPress={() => {
-                    navigation.navigate("HomeStackScreen");
+                    navigation.navigate("Home");
                   }}
                 />
               </Drawer.Section>

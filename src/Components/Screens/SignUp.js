@@ -1,18 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
+import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
 import theme from '../../Theme';
-import SignupForm from '../Forms/SignUpForm';
+import SignUpForm from '../Forms/SignUpForm';
 import Logo from '../Shared/Logo';
-import VectorAnime from '../Shared/VectorAnime';
-import VectorPurple from '../Shared/VectorPurple';
+import SignInGradient from '../Shared/SignInGradient';
 import { useFonts } from 'expo-font';
+import { Ionicons } from '@expo/vector-icons'; 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const deviceWidth = Dimensions.get("screen").width;
 const deviceHeight = Dimensions.get("screen").height;
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
     const [loaded] = useFonts({
         Poppins: require('../../../assets/Poppins-ExtraLight.ttf'),
     });
@@ -24,17 +24,23 @@ const SignUp = () => {
     return (
         <KeyboardAwareScrollView
         style={styles.container}
-        bounces={true}
+        bounces={false}
         >
-            <View style={styles.vectorAnime}>
-                <VectorAnime width={deviceWidth} height={deviceHeight}/>
+            <SignInGradient height={deviceHeight} width={deviceWidth}/>
+            <View style={styles.close}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons name="close" size={34} color={theme.colors.white} />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.logoContainer}>
                 <Logo style={styles.logo}/>
             </View>
-            <Text style={styles.title}>Sign Up</Text>
-            <View style={styles.formContainer}>
-                <SignupForm/>
+            <View style={styles.cardBack}>
+                <Text style={styles.title}>Sign Up</Text>
+                <View style={styles.formContainer}>
+                    <SignUpForm/>
+                </View>
             </View>
-            <VectorPurple width={deviceWidth} height={deviceHeight}/>
         </KeyboardAwareScrollView>
     );
 }
@@ -42,27 +48,37 @@ const SignUp = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.colors.background,
-        fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
+        backgroundColor: theme.colors.background
     },
-    vectorAnime: {
-        flex: 1,
-        flexDirection: 'row',
-        alignSelf: 'flex-end'
+    cardBack: {
+        width: deviceWidth * 0.8,
+        height: deviceHeight * 0.75,
+        backgroundColor: theme.colors.primary,
+        alignSelf: 'center',
+        padding: 30,
+        borderRadius: 30
+    },
+    logoContainer: {
+        alignSelf: 'center',
+        marginTop: deviceHeight * -0.05
+    },
+    close: {
+        alignSelf: 'flex-start',
+        marginTop: deviceHeight * -0.85,
+        left: deviceWidth * 0.06
     },
     logo: {
         width: 130,
         height: 100,
-        top: deviceHeight * 0.2,
-        right: deviceWidth * 0.05
     },
     title: {
-        bottom: deviceHeight * 0.1,
-        left: deviceWidth * 0.7,
         color: theme.colors.white,
-        fontSize: 22,
+        marginBottom: "10%",
+        fontSize: 32,
         fontWeight: 'bold',
-    }
+        alignSelf: 'center'
+    },
 })
 
 export default SignUp;

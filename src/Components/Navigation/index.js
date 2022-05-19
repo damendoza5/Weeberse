@@ -7,6 +7,7 @@ import { Context as AuthContext } from "../../Providers/AuthContext";
 import SignIn from "../Screens/SignIn";
 import SignUp from "../Screens/SignUp";
 import AppIndex from "../Screens/AppIndex";
+import SignSelect from "../Screens/SignSelect";
 
 const Stack = createStackNavigator();
 
@@ -26,8 +27,9 @@ function Navigation() {
 					</Stack.Navigator>
 				) : (
 					<Stack.Navigator screenOptions={{ headerShown: false }}>
-						<Stack.Screen name="SignIn" component={SignIn} />
-						<Stack.Screen name="SignUp" component={SignUp} />
+						<Stack.Screen name="SignSelect" component={SignSelect} />
+						<Stack.Screen name="SignIn" component={SignIn} options={{presentation: 'modal'}}/>
+						<Stack.Screen name="SignUp" component={SignUp} options={{presentation: 'modal'}}/>
 					</Stack.Navigator>
 				)}
 			</>

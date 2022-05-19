@@ -5,6 +5,7 @@ import theme from "../../Theme";
 import { getAuth } from "firebase/auth";
 
 import HomeStackScreen from "../Screens/routes/HomeStack";
+import SettingsStackScreen from "../Screens/routes/UserStack";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +22,8 @@ const DrawerMenu = () => {
       useLegacyImplementation={true}
       
     >
-      <Drawer.Screen name="Home" component={HomeStackScreen} options={{headerShown:false}}/>
+      <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} options={{headerShown:false}}/>
+      <Drawer.Screen name="SettingsStackScreen" component={SettingsStackScreen}/>
     </Drawer.Navigator>
   );
 };
